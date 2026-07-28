@@ -1,0 +1,6 @@
+Compilation in mac:
+clang++ -std=c++20 array.cpp -o array
+
+Running the code:
+./array
+
