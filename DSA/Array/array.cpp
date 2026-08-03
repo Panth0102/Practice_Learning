@@ -1,4 +1,5 @@
 #include <iostream>
+#include <climits>
 using namespace std;
 
 int* create(int& size);
@@ -13,6 +14,20 @@ void delAtPos(int arr[], int& size);
 void delAtBeginning(int arr[], int& size);
 void delAtEnd(int arr[], int& size);
 void delByValue(int*& arr, int& size);
+void maxValue(int arr[], int size);
+void minValue(int arr[], int size);
+void maxNthValue(int arr[], int size);
+void minNthValue(int arr[], int size);
+void bubbleSort(int arr[], int size);
+void selectionSort(int arr[], int size);
+void insertionSort(int arr[], int size);
+void mergeSort(int arr[], int size);
+void mergeHelper(int arr[], int left, int right);
+void merge(int arr[], int left, int mid, int right);
+void quickSort(int arr[], int size);
+void quickHelper(int arr[], int low, int high);
+int partition(int arr[], int low, int high);
+// Radix, Heap -min/max, bucket, counting, Binary Search
 
 int main() {
     int size = 0;
@@ -31,6 +46,15 @@ int main() {
         cout << "9. Delete at Beginning" << endl;
         cout << "10. Delete at Postion" << endl;
         cout << "11. Delete at End" << endl;
+        cout << "12. Maximum Value" << endl;
+        cout << "13. Minimum Value" << endl;
+        cout << "14. Maximum Value at nth position" << endl;
+        cout << "15. Minimum Value at nth position" << endl;
+        cout << "16. Bubble Sort" << endl;
+        cout << "17. Selection Sort" << endl;
+        cout << "18. Insertion Sort" << endl;
+        cout << "19. Merge Sort" << endl;
+        cout << "20. Quick Sort" << endl;
 
         cout << "0. Exit" << endl << endl;
         cout << "Enter your choice : ";
@@ -48,6 +72,15 @@ int main() {
         case 9: delAtBeginning(arr, size); break;
         case 10: delAtPos(arr, size); break;
         case 11: delAtEnd(arr, size); break;
+        case 12: maxValue(arr, size); break;
+        case 13: minValue(arr, size); break;
+        case 14: maxNthValue(arr, size); break;
+        case 15: minNthValue(arr, size); break;
+        case 16: bubbleSort(arr, size); break;
+        case 17: selectionSort(arr, size); break;
+        case 18: insertionSort(arr, size); break;
+        case 19: mergeSort(arr, size); break;
+        case 20: quickSort(arr, size); break;
 
         case 0:
             delete[] arr; exit(0);
@@ -159,7 +192,7 @@ void insertAtPosition(int*& arr, int& size) {
     if (pos == 0) {
         insertAtBeginning(arr, size);
     }
-    else if (pos = size) {
+    else if (pos == size) {
         insertAtEnd(arr, size);
     }
     else if (pos > 0 && pos < size) {
@@ -272,7 +305,234 @@ void delByValue(int*& arr, int& size) {
     size--;
 }
 
+//  ---------------------------------- ---------------MIN-MAX------------------- ----------------------------------
+
+void maxValue(int arr[], int size){
+    int maximum = INT_MIN;
+    for(int i = 0; i < size ; i++){
+        if(arr[i] > maximum){
+            maximum = arr[i];
+        }
+    }
+    cout << "The maximum value of array is : " << maximum << endl;
+}
+
+void minValue(int arr[], int size){
+    int minimum = INT_MAX;
+    for(int i = 0; i < size ; i++){
+        if(arr[i] < minimum){
+            minimum = arr[i];
+        }
+    }
+    cout << "The minimum value of array is : " << minimum << endl;
+}
+
+
+void maxNthValue(int arr[], int size){
+    int pos;
+    
+    cout << "Enter the position of maximum : ";
+    cin >> pos;
+
+    int prevMax = INT_MAX;
+
+    for(int i = 0 ; i < pos; i++){
+        int currMax = INT_MIN;
+        
+        for(int j = 0; j < size; j++){
+            if(arr[j] > currMax && arr[j] < prevMax){
+                currMax = arr[j];
+            }
+        }
+        prevMax = currMax;
+    }
+    
+    cout << "The maxium value ar position " << pos << " is : " << prevMax;
+}
+
+void minNthValue(int arr[], int size){
+    int pos;
+    
+    cout << "Enter the position of maximum : ";
+    cin >> pos;
+
+    int prevMin = INT_MIN;
+
+    for(int i = 0; i < pos; i++){
+        int currMin = INT_MAX;
+
+        for(int j = 0 ; j < size; j++ ){
+            if(arr[j] < currMin && arr[j] > prevMin){
+                currMin = arr[j];
+            }
+        }
+        prevMin = currMin;
+    }
+
+    cout << "The minimum value at position " << pos << " is : " <<prevMin;
+}
 
 //  ---------------------------------- ---------------SORTING------------------- ----------------------------------
 
-//
+// BUBBLE SORT
+
+void bubbleSort(int arr[], int size){
+    for(int i = 0; i < size - 1 ; i++){
+        bool swapped = false;
+
+        for(int j = 0; j < size - i - 1; j++){
+            
+            if(arr[j] > arr[j+1]){
+                int temp = arr[j+1];
+                arr[j+1] = arr[j];
+                arr[j] = temp;
+
+                swapped = true;
+            }
+        }
+        if(!swapped){
+            break;
+        }
+    }
+}
+
+// SELECTION SORT
+
+void selectionSort(int arr[], int size){
+    for(int i = 0; i < size - 1; i++){
+        int minIndex = i;
+
+        for(int j = i + 1; j < size; j++){
+            if(arr[minIndex] > arr[j]){
+                minIndex = j;
+            }
+        }
+
+        if(minIndex != i){
+            int temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+        }
+    }
+}
+
+// INSERTION SORT
+
+void insertionSort(int arr[], int size){
+    for(int i = 1; i <size; i++){
+        int key = arr[i];
+        int j = i-1;
+
+        for(; j >= 0 && arr[j] > key; j--){
+            arr[j+1] = arr[j];
+        }
+
+        arr[j+1] = key;
+    }
+}
+
+// MERGE SORT
+
+void mergeSort(int arr[], int size){
+    int left = 0;
+    int right = size - 1;
+    mergeHelper(arr, left, right);
+}
+
+void mergeHelper(int arr[], int left, int right){
+    if ( left >= right ) return;
+
+    int mid = (left + right)/2;
+    mergeHelper(arr, left, mid);
+    mergeHelper(arr, mid+1, right);
+
+    merge(arr, left, mid, right);
+
+}   
+
+void merge(int arr[], int left, int mid, int right){
+    // Size of sub array
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    // Values to new array
+    int *leftarr = new int[n1];
+    int *rightarr = new int[n2];
+
+    for(int i = 0; i < n1; i ++){
+        leftarr[i] = arr[left + i];
+    }
+
+    for(int i = 0; i <n2; i++){
+        rightarr[i] = arr[mid + i + 1];
+    }
+
+    int i = 0, j = 0, k = left;
+
+    //Comparing of values
+    while( i < n1 && j < n2){
+        if(leftarr[i] <= rightarr[j]){
+            arr[k] = leftarr[i];
+            i++;
+        }else{
+            arr[k] = rightarr[j];
+            j++;
+        }
+        k++;
+    }
+
+    // Adding back extra values
+    while(i < n1){
+        arr[k] = leftarr[i];
+        i++;
+        k++;
+    }
+
+    while(j < n2){
+        arr[k] = rightarr[j];
+        j++;
+        k++;
+    }
+
+    delete[] leftarr;
+    delete[] rightarr;
+}
+
+// QUICK SORT
+
+void quickSort(int arr[], int size){
+    int low = 0; 
+    int high = size-1;
+    quickHelper(arr, low, high);   
+}
+
+void quickHelper(int arr[], int low, int high){
+    if (low >= high) return;
+
+    int index = partition(arr, low, high);
+    quickHelper(arr, low, index -1);
+    quickHelper(arr, index, high);
+}
+
+int partition(int arr[], int low, int high){
+    int pivot = arr[(low+high)/2];
+    int i = low, j = high;
+    while(i <= j){
+        while(arr[i] < pivot){
+            i++;
+        }
+
+        while(arr[j] > pivot){
+            j--;
+        }
+
+        if( i<=j){
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;
+            j--;
+        }
+    }
+    return i;
+}
