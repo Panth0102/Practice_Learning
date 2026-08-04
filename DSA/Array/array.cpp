@@ -27,6 +27,7 @@ void merge(int arr[], int left, int mid, int right);
 void quickSort(int arr[], int size);
 void quickHelper(int arr[], int low, int high);
 int partition(int arr[], int low, int high);
+void radixSort(int arr[], int size);
 // Radix, Heap -min/max, bucket, counting, Binary Search
 
 int main() {
@@ -535,4 +536,48 @@ int partition(int arr[], int low, int high){
         }
     }
     return i;
+}
+
+// Radix Sort
+
+void radixSort(int arr[], int size){
+    int maximum = getMax(arr, size);
+
+    for(int exp = 1; maximum/exp > 0; exp*=10){
+        countingSort(arr, size, exp);
+    }
+}
+
+void countingSort(int arr[], int size, int exp){
+    int output[size];
+    int count[10] = {0};
+
+    for(int i = 0; i < size; i++){
+        count[(arr[i]/exp) % 10]++;
+    }
+
+    for(int i = 1; i < 10; i++){
+        count[i] += count[i+1];
+    }
+
+    for(int i = size - 1; i >= 0; i--){
+        output[count[(arr[i]/exp) % 10]-1] = arr[i];
+        count[(arr[i]/exp) % 10]--;
+    }
+
+    for(int i = 0; i < size; i++){
+        arr[i] = output[i];
+    }
+}
+
+int getMax(int arr[], int size){
+    int maximum = arr[0];
+
+    for(int i = 0; i < size; i++){
+        if(arr[i] > maximum){
+            maximum = arr[i];
+        }
+    }
+
+    return maximum;
 }
