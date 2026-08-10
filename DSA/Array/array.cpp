@@ -27,8 +27,14 @@ void merge(int arr[], int left, int mid, int right);
 void quickSort(int arr[], int size);
 void quickHelper(int arr[], int low, int high);
 int partition(int arr[], int low, int high);
+int getMax(int arr[], int size);
+void countingSort(int arr[], int size, int exp);
 void radixSort(int arr[], int size);
-// Radix, Heap -min/max, bucket, counting, Binary Search
+void heapify(int arr[], int size, int i);
+void heapSort(int arr[], int size);
+void bucketSort(int arr[], int size);
+void insertBucket(int bucket[], int size);
+// counting, Binary Search
 
 int main() {
     int size = 0;
@@ -56,6 +62,9 @@ int main() {
         cout << "18. Insertion Sort" << endl;
         cout << "19. Merge Sort" << endl;
         cout << "20. Quick Sort" << endl;
+        cout << "21. Radix Sort" << endl;
+        cout << "22. Heap Sort" << endl;
+        cout << "23. Bucket Sort" << endl;
 
         cout << "0. Exit" << endl << endl;
         cout << "Enter your choice : ";
@@ -82,6 +91,9 @@ int main() {
         case 18: insertionSort(arr, size); break;
         case 19: mergeSort(arr, size); break;
         case 20: quickSort(arr, size); break;
+        case 21: radixSort(arr,size); break;
+        case 22: heapSort(arr,size); break;
+        case 23: bucketSort(arr,size); break;
 
         case 0:
             delete[] arr; exit(0);
@@ -549,7 +561,7 @@ void radixSort(int arr[], int size){
 }
 
 void countingSort(int arr[], int size, int exp){
-    int output[size];
+    int* output = new int[size];
     int count[10] = {0};
 
     for(int i = 0; i < size; i++){
@@ -557,7 +569,7 @@ void countingSort(int arr[], int size, int exp){
     }
 
     for(int i = 1; i < 10; i++){
-        count[i] += count[i+1];
+        count[i] += count[i-1];
     }
 
     for(int i = size - 1; i >= 0; i--){
@@ -568,6 +580,7 @@ void countingSort(int arr[], int size, int exp){
     for(int i = 0; i < size; i++){
         arr[i] = output[i];
     }
+    delete[] output;
 }
 
 int getMax(int arr[], int size){
@@ -580,4 +593,85 @@ int getMax(int arr[], int size){
     }
 
     return maximum;
+}
+
+
+// Heap Sort
+
+void heapify(int arr[], int size, int i){
+    int largest = i;
+
+    int left = 2*i + 1;
+    int right = 2*i + 2;
+
+    if(left < size && arr[largest] < arr[left]) largest = left;
+    if(right < size && arr[largest] < arr[right]) largest = right;
+
+    if(largest != i){
+        swap(arr[i], arr[largest]);
+        heapify(arr,size, largest);
+    }
+}
+
+void heapSort(int arr[], int size){
+    for (int i = size / 2 - 1; i >= 0; i--){
+        heapify(arr, size, i);
+    }
+
+    for(int i = size-1; i > 0; i--){
+        swap(arr[0], arr[i]);
+        heapify(arr,i,0);
+    }
+}
+
+
+// Bucket Sort
+
+void bucketSort(int arr[], int size){
+    int bucketCount = 10;
+
+    int** buckets = new int*[bucketCount];
+
+    for(int i = 0; i < bucketCount; i++){
+        buckets[i] = new int[size];
+    }
+
+    int bucketSize[10] = {0};
+
+    for(int i = 0; i < size; i++){
+        int index = arr[i] / 10;
+        buckets[index][bucketSize[index]] = arr[i];
+        bucketSize[index]++;
+    }
+
+    for(int i = 0; i < bucketCount; i++){
+        insertBucket(buckets[i], bucketSize[i]);
+    }
+
+    int index = 0;
+    for(int i = 0; i < bucketCount; i++){
+        for(int j = 0; j < bucketSize[i]; j++){
+            arr[index] = buckets[i][j];
+            index++;
+        }
+    }
+
+    for(int i = 0; i < bucketCount; i++){
+        delete[] buckets[i];
+    }
+    delete[] buckets;
+}
+
+void insertBucket(int bucket[], int size){
+    for(int i = 0; i < size; i++){
+        int key = bucket[i];
+        int j = i - 1;
+
+        while(j >= 0 && bucket[j] > key){
+            bucket[j + 1] = bucket[j];
+            j--;
+        }
+
+        bucket[j + 1] = key;
+    }
 }
