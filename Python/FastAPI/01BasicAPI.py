@@ -12,7 +12,7 @@ def home():
 
 
 # http://127.0.0.1:8000/connect
-@app.get("/connect")       # Default Home route
+@app.get("/connect")       # Custom Home route
 def connect():
     return "Connect us at xyz@abc.com"
 
