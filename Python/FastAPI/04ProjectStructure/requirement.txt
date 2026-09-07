@@ -1,0 +1,18 @@
+Also create a python environment, when creating a new project, currently this folder is already under a Folder, which has env, so we don't need to to setup environment variable again
+
+Cmd:
+    python -m venv env              -- To create
+    source env/bin/activate         -- To run
+
+    python -m pip install numpy pandas matplotlib fastapi uvicorn
+
+
+
+Fast Api:
+    python -m pip install numpy pandas matplotlib fastapi uvicorn
+
+SQLalchemy:
+    pip install SQLAlchemy
+
+Pydantic_settings:
+    pip install pydantic_settings

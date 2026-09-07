@@ -1,0 +1,31 @@
+
+src:
+
+models.py
+
+controller.py:
+    To control flow of project
+
+dtos.py:
+    Data validation
+
+router.py:
+    routes in file
+    
+
+
+
+
+## Db Connection ##
+
+Step:1 
+    Create a DB_CONNECTION in .env
+
+Step:2
+    With help of pydantic make the class Settings in settings.py
+
+Step:3
+    now create session_maker, base, engine and get_db() in db.py
+
+Step:4
+    Import engine and base in main.py, and then create metadata for base with help of engine to connect ot data base
