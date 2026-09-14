@@ -29,3 +29,15 @@ Step:3
 
 Step:4
     Import engine and base in main.py, and then create metadata for base with help of engine to connect ot data base
+
+
+
+# Working of File model
+
+class taskModel(Base):
+    __tablename__ = "user_task"                                 # Table Name
+
+    id = Column(Integer, primary_key=True, index=True)          # Attributes
+    title = Column(String, nullable=False)
+    description = Column(String, nullable=False)
+    is_completed = Column(Boolean, default=False)
