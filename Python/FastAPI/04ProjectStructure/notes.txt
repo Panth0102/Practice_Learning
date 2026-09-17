@@ -41,3 +41,5 @@ class taskModel(Base):
     title = Column(String, nullable=False)
     description = Column(String, nullable=False)
     is_completed = Column(Boolean, default=False)
+
+Minor Changes
