@@ -1,3 +1,5 @@
+fastapi dev main.py
+
 
 src:
 
@@ -42,4 +44,24 @@ class taskModel(Base):
     description = Column(String, nullable=False)
     is_completed = Column(Boolean, default=False)
 
-Minor Changes
+## Adding New data to Db ##
+
+#Router- controller
+1. Router -> is used when we wanna have a prefix for a link
+2. Controller -> is used to specify methods
+
+Import controller to router file, and make same method, and pass it to controller, so we don't need to worry about error in route
+
+3. dtos -> Are used to create the schema for data connections
+
+Pass taskschema into router, so that it can pass it into controller
+
+4. Import Depends and call it in router with passing arugment of get_db, which is made in db.py inside utils, so that it can be connected to database
+
+5. Pass it to controller
+
+6. Import taskModel to the controller
+
+7. Create a new object of taskModel and pass values to it
+
+8. Then add, commit and refresh it.
