@@ -3,7 +3,6 @@ from src.tasks import controller
 from src.tasks.dtos import TaskSchema
 from src.utils.db import get_db
 
-
 task_routes = APIRouter(prefix='/task')
 
 @task_routes.post('/create')

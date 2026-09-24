@@ -1,7 +1,6 @@
 from sqlalchemy import Integer, Boolean, Column, String
 from src.utils.db import Base
 
-
 class taskModel(Base):
     __tablename__ = "user_task"
 
