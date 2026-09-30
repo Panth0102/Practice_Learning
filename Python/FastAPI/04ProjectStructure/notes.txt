@@ -65,3 +65,13 @@ Pass taskschema into router, so that it can pass it into controller
 7. Create a new object of taskModel and pass values to it
 
 8. Then add, commit and refresh it.
+
+
+
+## Recieving Data from backend
+
+1. Make a controller, Get it into router
+
+2. from fastapi import HTTPException 
+    Use this when no data is foun and error 404 needs to be shown
+
