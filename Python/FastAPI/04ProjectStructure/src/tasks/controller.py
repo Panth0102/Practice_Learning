@@ -25,3 +25,45 @@ def get_one_task(task_id : int, db: Session):
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
     return {"status": "Task fetched successfully!", "data": task}
+
+
+def update_task(task_id:int, body:TaskSchema, db: Session):
+    task = db.query(taskModel).get(task_id)
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+
+    task.title = body.title
+    task.description = body.description
+    task.is_completed = body.is_completed
+    db.add(task)
+    db.commit()
+    db.refresh(task)
+
+    return {"status": "Task updated successfully!", "data": task}
+
+
+def update_better_task(task_id:int, body:TaskSchema, db = Session):
+    task = db.query(taskModel).get(task_id)
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+
+    body = body.model_dump(exclude_unset=True)
+    for field, value in body.items():
+        if value is not None:
+            setattr(task, field, value)
+    
+    db.add(task)
+    db.commit()
+    db.refresh(task)
+    
+    return {"status": "Task updated successfully!", "data": task}
+
+def delete_task(task_id:int, db: Session):
+    task = db.query(taskModel).get(task_id)
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+
+    db.delete(task)
+    db.commit()
+    
+    return {"status": "Task deleted successfully!"}
