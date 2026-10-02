@@ -90,18 +90,29 @@ public:
         return idx;
     }
 
-    void reverseList() {
-        Node* prev = nullptr;
-        Node* curr = head;
-        Node* next = nullptr;
+    // void reverseList() {
+    //     Node* prev = nullptr;
+    //     Node* curr = head;
+    //     Node* next = nullptr;
 
-        while(curr != nullptr) {
-            next = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
+    //     while(curr != nullptr) {
+    //         next = curr->next;
+    //         curr->next = prev;
+    //         prev = curr;
+    //         curr = next;
+    //     }
+    //     head = prev;
+    // }
+
+    void reverseList() {
+        Node* temp = nullptr;
+        while (head != nullptr) {
+            Node* next = head->next;
+            head->next = temp;
+            temp = head;
+            head = next;
         }
-        head = prev;
+        head = temp;
     }
 
     void deleteAtBeginning() {

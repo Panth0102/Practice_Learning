@@ -157,7 +157,20 @@ public:
         temp->next->prev = temp->prev;
         delete temp;
     }
+
+    void reverse() {
+        Node* temp = nullptr;
+        while (head) {
+            temp = head->next;
+            head->next = head->prev;
+            head->prev = temp;
+            if (!temp) break;
+            head = temp;
+        }
+    }
 };
+
+
 
 // 1 1 1 2 1 3 1 4 1 5 1 6 1 7 1 8 1 9 1 10
 int main() {
@@ -230,7 +243,7 @@ int main() {
             cin.get();
             break;
         case 9:
-            // list.reverse();
+            list.reverse();
             break;
         case 10:
             list.printForward();

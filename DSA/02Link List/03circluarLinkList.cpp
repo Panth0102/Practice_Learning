@@ -109,23 +109,35 @@ public:
         return count;
     }
 
+    // void reverseList() {
+    //     if (!head || head->next == head) return;
+    
+    //     Node* prev = nullptr;
+    //     Node* curr = head;
+    //     Node* next = nullptr;
+    //     Node* first = head; 
+    
+    //     do {
+    //         next = curr->next;
+    //         curr->next = prev;
+    //         prev = curr;
+    //         curr = next;
+    //     } while (curr != head);
+    
+    //     first->next = prev; 
+    //     head = prev;        
+    // }
+
     void reverseList() {
         if (!head || head->next == head) return;
-    
-        Node* prev = nullptr;
-        Node* curr = head;
-        Node* next = nullptr;
-        Node* first = head; 
-    
-        do {
-            next = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
-        } while (curr != head);
-    
-        first->next = prev; 
-        head = prev;        
+        Node* temp = head->next;
+        head->next = head;
+        while (temp != head) {
+            Node* next = temp->next;
+            temp->next = head;
+            head = temp;
+            temp = next;
+        }
     }
     
 
