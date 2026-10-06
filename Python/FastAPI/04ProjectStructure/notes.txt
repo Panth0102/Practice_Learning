@@ -75,3 +75,28 @@ Pass taskschema into router, so that it can pass it into controller
 2. from fastapi import HTTPException 
     Use this when no data is foun and error 404 needs to be shown
 
+
+## What code to pass
+
+It can passed as an argument in router, after implementing 
+    from fastapi import status
+
+1. 200: when get end points created
+2. 202: when put and post end points used
+3. 204: when delete end point used
+
+
+
+## For higher privacy
+
+we create a need schema in dtos
+class TaskSchemaResponse(BaseModel):
+    id: int | None = None
+    status: str
+    data: TaskSchema | list[TaskSchema] | None = None
+
+In all the controller, we now remove the hardcoded response of status, and instead return task
+
+And in router method, for response model we can call this new schema, and status
+we need to import TaskSchemaResponse
+@task_routes.post('/create',response_model=TaskSchemaResponse ,status_code=status.HTTP_201_CREATED)
