@@ -1,18 +1,31 @@
-//49 Group Anagram
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+
+using namespace std;
+
+// 49. Group Anagrams
 
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-       vector<vector<string>>ans;
-       unordered_map<string, vector<string>>mp;
-        for(int i = 0 ; i < strs.size() ; i++){
+        vector<vector<string>> ans;
+        unordered_map<string, vector<string>> mp;
+
+        for (int i = 0; i < strs.size(); i++) {
             string s = strs[i];
-            sort(strs[i].begin(),strs[i].end());
-            mp[strs[i]].push_back(s);
+
+            sort(s.begin(), s.end());
+            mp[s].push_back(strs[i]);
         }
-        for(auto i : mp){
+
+        for (auto i : mp) {
             ans.push_back(i.second);
         }
+
         return ans;
     }
 };
