@@ -1,4 +1,6 @@
+
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 class PriorityQueue {
@@ -10,8 +12,12 @@ public:
         size = 0;
     }
 
+    // Insert element
     void insert(int val) {
-        if (size == 1000) return;
+        if (size == 1000) {
+            cout << "Priority Queue is Full!\n";
+            return;
+        }
 
         int i = size++;
         arr[i] = val;
@@ -20,26 +26,113 @@ public:
             swap(arr[i], arr[(i - 1) / 2]);
             i = (i - 1) / 2;
         }
+
+        cout << val << " inserted successfully.\n";
     }
 
+    // Delete highest priority element
+    void remove() {
+        if (size == 0) {
+            cout << "Priority Queue is Empty!\n";
+            return;
+        }
+
+        cout << "Deleted Element: " << arr[0] << endl;
+
+        arr[0] = arr[size - 1];
+        size--;
+
+        int i = 0;
+
+        while (true) {
+            int largest = i;
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+
+            if (left < size && arr[left] > arr[largest])
+                largest = left;
+
+            if (right < size && arr[right] > arr[largest])
+                largest = right;
+
+            if (largest == i)
+                break;
+
+            swap(arr[i], arr[largest]);
+            i = largest;
+        }
+    }
+
+    // Display highest priority element
+    void peek() {
+        if (size == 0) {
+            cout << "Priority Queue is Empty!\n";
+            return;
+        }
+
+        cout << "Highest Priority Element: " << arr[0] << endl;
+    }
+
+    // Display all elements
     void display() {
+        if (size == 0) {
+            cout << "Priority Queue is Empty!\n";
+            return;
+        }
+
+        cout << "Priority Queue: ";
+
         for (int i = 0; i < size; i++) {
             cout << arr[i] << " ";
         }
+
         cout << endl;
     }
 };
 
 int main() {
     PriorityQueue pq;
+    int choice, val;
 
-    pq.insert(30);
-    pq.insert(10);
-    pq.insert(50);
-    pq.insert(20);
-    pq.insert(40);
+    do {
+        cout << "\n----- PRIORITY QUEUE MENU -----\n";
+        cout << "1. Insert\n";
+        cout << "2. Delete\n";
+        cout << "3. Peek\n";
+        cout << "4. Display\n";
+        cout << "5. Exit\n";
 
-    pq.display();
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter value: ";
+                cin >> val;
+                pq.insert(val);
+                break;
+
+            case 2:
+                pq.remove();
+                break;
+
+            case 3:
+                pq.peek();
+                break;
+
+            case 4:
+                pq.display();
+                break;
+
+            case 5:
+                cout << "Exiting Program...\n";
+                break;
+
+            default:
+                cout << "Invalid Choice! Try Again.\n";
+        }
+
+    } while (choice != 5);
 
     return 0;
 }
