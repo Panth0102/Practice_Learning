@@ -88,6 +88,11 @@ public:
 
         cout << endl;
     }
+
+    // Return number of elements
+    void getSize() {
+        cout << "Current Size: " << size << endl;
+    }
 };
 
 int main() {
@@ -100,7 +105,8 @@ int main() {
         cout << "2. Delete\n";
         cout << "3. Peek\n";
         cout << "4. Display\n";
-        cout << "5. Exit\n";
+        cout << "5. Get Size\n";
+        cout << "0. Exit\n";
 
         cout << "Enter your choice: ";
         cin >> choice;
@@ -125,6 +131,9 @@ int main() {
                 break;
 
             case 5:
+                pq.getSize();
+                break;
+            case 0:
                 cout << "Exiting Program...\n";
                 break;
 
@@ -132,7 +141,7 @@ int main() {
                 cout << "Invalid Choice! Try Again.\n";
         }
 
-    } while (choice != 5);
+    } while (choice != 0);
 
     return 0;
 }
