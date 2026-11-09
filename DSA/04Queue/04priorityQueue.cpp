@@ -93,6 +93,16 @@ public:
     void getSize() {
         cout << "Current Size: " << size << endl;
     }
+
+    // Return highest priority element
+    int getMax() {
+        if (size == 0) {
+            cout << "Priority Queue is Empty!\n";
+            return -1;
+        }
+
+        return arr[0];
+    }
 };
 
 int main() {
@@ -106,6 +116,7 @@ int main() {
         cout << "3. Peek\n";
         cout << "4. Display\n";
         cout << "5. Get Size\n";
+        cout << "6. Get Maximum Element\n";
         cout << "0. Exit\n";
 
         cout << "Enter your choice: ";
@@ -133,6 +144,11 @@ int main() {
             case 5:
                 pq.getSize();
                 break;
+
+            case 6:
+            cout << "Maximum Element: " << pq.getMax() << endl;
+                break;
+                
             case 0:
                 cout << "Exiting Program...\n";
                 break;
