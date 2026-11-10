@@ -103,6 +103,18 @@ public:
 
         return arr[0];
     }
+
+    // Search for an element
+    void search(int val) {
+        for (int i = 0; i < size; i++) {
+            if (arr[i] == val) {
+                cout << val << " found at index " << i << endl;
+                return;
+            }
+        }
+
+        cout << val << " not found in Priority Queue.\n";
+    }
 };
 
 int main() {
@@ -117,6 +129,7 @@ int main() {
         cout << "4. Display\n";
         cout << "5. Get Size\n";
         cout << "6. Get Maximum Element\n";
+        cout << "7. Search Element\n";
         cout << "0. Exit\n";
 
         cout << "Enter your choice: ";
@@ -146,9 +159,14 @@ int main() {
                 break;
 
             case 6:
-            cout << "Maximum Element: " << pq.getMax() << endl;
+                cout << "Maximum Element: " << pq.getMax() << endl;
                 break;
                 
+            case 7:
+                cout << "Enter value to search: ";
+                cin >> val;
+                pq.search(val);
+                break;
             case 0:
                 cout << "Exiting Program...\n";
                 break;
